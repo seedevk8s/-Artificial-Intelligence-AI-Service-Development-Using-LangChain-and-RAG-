@@ -1,0 +1,37 @@
+graph TB
+    subgraph "LCEL Chain Flow"
+        Input["입력 데이터<br/>{variable: value}"]
+        Prompt["PromptTemplate<br/>프롬프트 생성"]
+        LLM["ChatOpenAI<br/>모델 호출"]
+        Parser["OutputParser<br/>결과 파싱"]
+        Output["최종 출력"]
+    end
+    
+    Input --> Prompt
+    Prompt --> LLM
+    LLM --> Parser
+    Parser --> Output
+    
+    subgraph "Memory Management"
+        MessageHistory["ChatMessageHistory"]
+        InMemory["InMemoryCache"]
+        RedisCache["RedisChatMessageHistory"]
+        Summary["Conversation Summary"]
+    end
+    
+    Prompt -.-> MessageHistory
+    MessageHistory --> InMemory
+    MessageHistory --> RedisCache
+    MessageHistory --> Summary
+    
+    subgraph "Tool Integration"
+        ToolDef["Tool Definition"]
+        Agent["Agent Executor"]
+        ToolCall["Tool Execution"]
+        ToolResult["Tool Result"]
+    end
+    
+    LLM --> Agent
+    Agent --> ToolCall
+    ToolCall --> ToolResult
+    ToolResult --> Parser

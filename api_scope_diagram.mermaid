@@ -1,0 +1,77 @@
+graph TB
+    subgraph "전통적 Backend API"
+        B1[HTTP 라우팅]
+        B2[미들웨어]
+        B3[데이터베이스 ORM]
+        B4[인증/권한]
+        B5[캐싱]
+        B6[로깅]
+        B1 --> B2 --> B3
+        B4 --> B2
+        B5 --> B3
+        B6 --> B2
+    end
+
+    subgraph "전통적 Frontend API"
+        F1[컴포넌트 렌더링]
+        F2[상태 관리]
+        F3[이벤트 핸들링]
+        F4[HTTP 클라이언트]
+        F5[라우팅]
+        F6[애니메이션]
+        F1 --> F2
+        F2 --> F3
+        F3 --> F4
+        F5 --> F1
+        F6 --> F1
+    end
+
+    subgraph "LangChain API 생태계"
+        L1[LLM 인터페이스]
+        L2[프롬프트 템플릿]
+        L3[체인 구성]
+        L4[에이전트]
+        L5[도구 연결]
+        L6[메모리 관리]
+        L7[벡터 저장소]
+        L8[임베딩]
+        L9[문서 로더]
+        L10[텍스트 분할]
+        L11[검색기]
+        L12[콜백]
+        
+        L2 --> L1
+        L1 --> L3
+        L3 --> L4
+        L5 --> L4
+        L6 --> L4
+        L9 --> L10
+        L10 --> L8
+        L8 --> L7
+        L7 --> L11
+        L11 --> L3
+        L12 --> L3
+    end
+
+    subgraph "추상화 레벨"
+        Level1[하드웨어/네트워크 레벨]
+        Level2[프로토콜/UI 레벨]
+        Level3[인지/추론 레벨]
+        
+        Level1 --> Level2
+        Level2 --> Level3
+    end
+
+    B1 -.->|"HTTP 프로토콜 추상화"| Level2
+    F1 -.->|"DOM/이벤트 추상화"| Level2
+    L1 -.->|"AI 추론 추상화"| Level3
+
+    classDef backend fill:#e1f5fe
+    classDef frontend fill:#f3e5f5
+    classDef langchain fill:#e8f5e8
+    classDef level fill:#fff3e0
+
+    class B1,B2,B3,B4,B5,B6 backend
+    class F1,F2,F3,F4,F5,F6 frontend
+    class L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,L11,L12 langchain
+    class Level1,Level2,Level3 level

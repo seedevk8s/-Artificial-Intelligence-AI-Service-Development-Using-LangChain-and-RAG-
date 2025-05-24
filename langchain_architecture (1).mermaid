@@ -1,0 +1,37 @@
+graph TB
+    subgraph "LangChain v0.3 Architecture"
+        Core[langchain-core<br/>핵심 기능]
+        Main[langchain<br/>메인 패키지]
+        
+        subgraph "Provider Packages"
+            OpenAI[langchain-openai<br/>OpenAI 연동]
+            Anthropic[langchain-anthropic<br/>Anthropic 연동]
+            Postgres[langchain-postgres<br/>DB 연동]
+        end
+        
+        Community[langchain-community<br/>통합 기능]
+        Experimental[langchain-experimental<br/>실험적 기능]
+        Redis[langchain-redis<br/>Redis 연동]
+    end
+    
+    Core --> Main
+    Core --> OpenAI
+    Core --> Anthropic
+    Core --> Postgres
+    Core --> Community
+    Core --> Experimental
+    Core --> Redis
+
+    subgraph "Core Components"
+        Prompts[PromptTemplate<br/>프롬프트 템플릿]
+        LLMs[LLM Wrappers<br/>모델 래퍼]
+        LCEL[LCEL<br/>Expression Language]
+        Chains[Chain Execution<br/>체인 실행]
+        OutputParsers[Output Parsers<br/>출력 파서]
+    end
+    
+    Core --> Prompts
+    Core --> LLMs
+    Core --> LCEL
+    Core --> Chains
+    Core --> OutputParsers

@@ -1,0 +1,88 @@
+graph TB
+    subgraph "사용자 애플리케이션 레이어"
+        APP[🚀 Your Application]
+        UI[👤 User Interface]
+    end
+
+    subgraph "LangChain 핵심 추상화"
+        subgraph "체인 & 에이전트"
+            CHAIN[🔗 Chains<br/>Sequential Processing]
+            AGENT[🤖 Agents<br/>Decision Making]
+            RUNNABLE[⚡ Runnable<br/>Base Interface]
+        end
+        
+        subgraph "모델 통합"
+            LLM[🧠 LLMs<br/>OpenAI, Anthropic, etc]
+            CHAT[💬 Chat Models<br/>GPT-4, Claude, etc]
+            EMBED[📊 Embeddings<br/>Vector Representations]
+        end
+        
+        subgraph "메모리 & 상태"
+            MEMORY[🧠 Memory<br/>Conversation History]
+            STORE[💾 Stores<br/>Vector/Document/Key-Value]
+        end
+        
+        subgraph "도구 & 외부 연동"
+            TOOLS[🛠️ Tools<br/>APIs, Functions, etc]
+            RETRIEVER[🔍 Retrievers<br/>Document Search]
+            LOADER[📁 Document Loaders<br/>PDF, Web, DB, etc]
+        end
+    end
+
+    subgraph "데이터 처리 파이프라인"
+        SPLIT[✂️ Text Splitters<br/>Chunking Strategy]
+        VECTOR[🗃️ Vector Stores<br/>Pinecone, Chroma, FAISS]
+        INDEX[📇 Indexes<br/>Efficient Retrieval]
+    end
+
+    subgraph "외부 서비스 & 데이터"
+        API[🌐 External APIs<br/>Weather, News, etc]
+        DB[🗄️ Databases<br/>SQL, NoSQL]
+        FILES[📄 Documents<br/>PDF, DOC, TXT]
+        WEB[🌍 Web Pages<br/>URLs, Scraping]
+    end
+
+    %% 연결 관계
+    APP --> CHAIN
+    APP --> AGENT
+    UI --> APP
+    
+    CHAIN --> LLM
+    CHAIN --> CHAT
+    CHAIN --> MEMORY
+    CHAIN --> TOOLS
+    
+    AGENT --> LLM
+    AGENT --> TOOLS
+    AGENT --> MEMORY
+    
+    RUNNABLE --> CHAIN
+    RUNNABLE --> AGENT
+    
+    TOOLS --> API
+    TOOLS --> DB
+    
+    RETRIEVER --> VECTOR
+    RETRIEVER --> INDEX
+    
+    LOADER --> FILES
+    LOADER --> WEB
+    LOADER --> DB
+    
+    FILES --> SPLIT
+    WEB --> SPLIT
+    SPLIT --> EMBED
+    EMBED --> VECTOR
+    
+    MEMORY --> STORE
+    
+    %% 스타일링
+    classDef userLayer fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef coreLayer fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef dataLayer fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef externalLayer fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    
+    class APP,UI userLayer
+    class CHAIN,AGENT,RUNNABLE,LLM,CHAT,EMBED,MEMORY,STORE,TOOLS,RETRIEVER,LOADER coreLayer
+    class SPLIT,VECTOR,INDEX dataLayer
+    class API,DB,FILES,WEB externalLayer

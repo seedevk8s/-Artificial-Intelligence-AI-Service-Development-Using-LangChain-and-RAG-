@@ -1,0 +1,186 @@
+graph TB
+    subgraph "🧠 Models Layer"
+        LLM[Large Language Models]
+        CHAT[Chat Models]
+        EMB[Embeddings]
+        
+        LLM --> OPENAI[OpenAI GPT-4]
+        LLM --> ANTHRO[Anthropic Claude]
+        LLM --> GOOGLE[Google Gemini]
+        LLM --> LLAMA[Meta Llama]
+        
+        CHAT --> CONV[Conversational AI]
+        EMB --> TEXTVEC[Text Vectorization]
+    end
+
+    subgraph "📝 Prompts Layer"
+        PT[Prompt Templates]
+        FS[Few-Shot Prompts]
+        CP[Chat Prompts]
+        OP[Output Parsers]
+        
+        PT --> BASIC[Basic Templates]
+        FS --> EXAMPLES[Dynamic Examples]
+        CP --> ROLES[System/User/Assistant]
+        OP --> STRUCT[Structured Output]
+    end
+
+    subgraph "⛓️ Chains Layer"
+        BC[Basic Chains]
+        SC[Specialized Chains]
+        AC[Advanced Chains]
+        
+        BC --> LLMC[LLM Chain]
+        BC --> SEQ[Sequential Chain]
+        
+        SC --> RAG[Retrieval QA]
+        SC --> CONV_RAG[Conversational RAG]
+        SC --> SUMM[Summarization]
+        SC --> SQL[SQL Database]
+        
+        AC --> MAPRED[Map-Reduce]
+        AC --> REFINE[Refine]
+    end
+
+    subgraph "🤖 Agents Layer"
+        AT[Agent Types]
+        TOOLS[Tools Ecosystem]
+        CT[Custom Tools]
+        
+        AT --> REACT[ReAct Agent]
+        AT --> CONVA[Conversational Agent]
+        AT --> PLAN[Plan-and-Execute]
+        
+        TOOLS --> SEARCH[Search Tools]
+        TOOLS --> CALC[Calculator]
+        TOOLS --> CODE[Code Execution]
+        TOOLS --> API[API Tools]
+        
+        CT --> CUSTOM[Custom Functions]
+    end
+
+    subgraph "🧠 Memory Layer"
+        MT[Memory Types]
+        PS[Persistent Storage]
+        
+        MT --> BUFFER[Buffer Memory]
+        MT --> SUMMARY[Summary Memory]
+        MT --> WINDOW[Window Memory]
+        MT --> VECTOR[Vector Memory]
+        
+        PS --> REDIS[Redis]
+        PS --> POSTGRES[PostgreSQL]
+        PS --> MONGO[MongoDB]
+    end
+
+    subgraph "📚 Document Processing"
+        DL[Document Loaders]
+        TS[Text Splitters]
+        VS[Vector Stores]
+        
+        DL --> TEXT[Text Files]
+        DL --> WEB[Web Content]
+        DL --> PDF[PDF Documents]
+        DL --> CODE[Code Repos]
+        
+        TS --> CHAR[Character Split]
+        TS --> TOKEN[Token Split]
+        TS --> MARKDOWN[Markdown Split]
+        
+        VS --> CHROMA[Chroma]
+        VS --> FAISS[FAISS]
+        VS --> PINECONE[Pinecone]
+        VS --> QDRANT[Qdrant]
+    end
+
+    subgraph "🔍 Retrieval System"
+        RS[Retrieval Strategies]
+        AR[Advanced Retrieval]
+        
+        RS --> SIM[Similarity Search]
+        RS --> MMR[MMR Search]
+        RS --> THRESH[Threshold Filter]
+        
+        AR --> PARENT[Parent Document]
+        AR --> SELFQ[Self Query]
+        AR --> COMPRESS[Compression]
+        AR --> ENSEMBLE[Ensemble]
+    end
+
+    subgraph "📊 Monitoring & Callbacks"
+        CB[Callbacks]
+        MON[Monitoring Platforms]
+        
+        CB --> STDOUT[Console Output]
+        CB --> FILE[File Logging]
+        CB --> WANDB[Weights & Biases]
+        
+        MON --> LANGSMITH[LangSmith]
+        MON --> HELICONE[Helicone]
+        MON --> PHOENIX[Phoenix]
+    end
+
+    subgraph "🌐 Application Layer"
+        DEPLOY[Deployment Patterns]
+        INTEG[Integration Ecosystem]
+        
+        DEPLOY --> FASTAPI[FastAPI Server]
+        DEPLOY --> STREAMLIT[Streamlit App]
+        DEPLOY --> CHATBOT[Chatbot Interface]
+        
+        INTEG --> LANGSERVE[LangServe]
+        INTEG --> LANGGRAPH[LangGraph]
+        INTEG --> OPENGPTS[OpenGPTs]
+    end
+
+    subgraph "🎯 Use Cases"
+        ENT[Enterprise]
+        PERS[Personal]
+        
+        ENT --> CUSTSVC[Customer Service]
+        ENT --> DOCQA[Document Q&A]
+        ENT --> CODEREVIEW[Code Review]
+        ENT --> CONTRACT[Contract Analysis]
+        
+        PERS --> ASSISTANT[Personal Assistant]
+        PERS --> TUTOR[Learning Helper]
+        PERS --> CONTENT[Content Creation]
+        PERS --> LANG[Language Learning]
+    end
+
+    %% Connections between layers
+    LLM --> PT
+    PT --> BC
+    BC --> AT
+    AT --> MT
+    DL --> TS
+    TS --> VS
+    VS --> RS
+    RS --> BC
+    BC --> CB
+    CB --> DEPLOY
+    DEPLOY --> ENT
+    DEPLOY --> PERS
+
+    %% Styling
+    classDef modelLayer fill:#e3f2fd
+    classDef promptLayer fill:#f3e5f5
+    classDef chainLayer fill:#e8f5e8
+    classDef agentLayer fill:#fff3e0
+    classDef memoryLayer fill:#fce4ec
+    classDef docLayer fill:#e0f2f1
+    classDef retrievalLayer fill:#f1f8e9
+    classDef monitorLayer fill:#fff8e1
+    classDef appLayer fill:#e8eaf6
+    classDef usecaseLayer fill:#ffebee
+
+    class LLM,CHAT,EMB,OPENAI,ANTHRO,GOOGLE,LLAMA,CONV,TEXTVEC modelLayer
+    class PT,FS,CP,OP,BASIC,EXAMPLES,ROLES,STRUCT promptLayer
+    class BC,SC,AC,LLMC,SEQ,RAG,CONV_RAG,SUMM,SQL,MAPRED,REFINE chainLayer
+    class AT,TOOLS,CT,REACT,CONVA,PLAN,SEARCH,CALC,CODE,API,CUSTOM agentLayer
+    class MT,PS,BUFFER,SUMMARY,WINDOW,VECTOR,REDIS,POSTGRES,MONGO memoryLayer
+    class DL,TS,VS,TEXT,WEB,PDF,CODE,CHAR,TOKEN,MARKDOWN,CHROMA,FAISS,PINECONE,QDRANT docLayer
+    class RS,AR,SIM,MMR,THRESH,PARENT,SELFQ,COMPRESS,ENSEMBLE retrievalLayer
+    class CB,MON,STDOUT,FILE,WANDB,LANGSMITH,HELICONE,PHOENIX monitorLayer
+    class DEPLOY,INTEG,FASTAPI,STREAMLIT,CHATBOT,LANGSERVE,LANGGRAPH,OPENGPTS appLayer
+    class ENT,PERS,CUSTSVC,DOCQA,CODEREVIEW,CONTRACT,ASSISTANT,TUTOR,CONTENT,LANG usecaseLayer

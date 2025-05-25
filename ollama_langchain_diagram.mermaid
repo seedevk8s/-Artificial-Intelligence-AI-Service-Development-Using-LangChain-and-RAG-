@@ -1,0 +1,48 @@
+graph TB
+    subgraph "로컬 환경"
+        O[Ollama]
+        O --> M1[Llama 2/3]
+        O --> M2[Mistral]
+        O --> M3[CodeLlama]
+        O --> M4[기타 오픈소스 모델들]
+        O --> API[REST API<br/>localhost:11434]
+    end
+    
+    subgraph "LangChain 프레임워크"
+        LC[LangChain]
+        LC --> Chain[체인]
+        LC --> Agent[에이전트]
+        LC --> RAG[RAG 시스템]
+        LC --> Tools[외부 도구 연동]
+    end
+    
+    subgraph "외부 LLM 서비스"
+        OpenAI[OpenAI GPT]
+        Anthropic[Anthropic Claude]
+        Google[Google Gemini]
+    end
+    
+    subgraph "애플리케이션"
+        App1[챗봇]
+        App2[문서 분석기]
+        App3[코드 생성기]
+        App4[검색 시스템]
+    end
+    
+    API -.-> LC
+    LC --> OpenAI
+    LC --> Anthropic
+    LC --> Google
+    
+    LC --> App1
+    LC --> App2
+    LC --> App3
+    LC --> App4
+    
+    classDef ollama fill:#e1f5fe
+    classDef langchain fill:#f3e5f5
+    classDef apps fill:#e8f5e8
+    
+    class O,M1,M2,M3,M4,API ollama
+    class LC,Chain,Agent,RAG,Tools langchain
+    class App1,App2,App3,App4 apps

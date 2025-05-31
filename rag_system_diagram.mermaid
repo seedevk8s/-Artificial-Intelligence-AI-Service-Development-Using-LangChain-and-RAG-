@@ -1,0 +1,24 @@
+graph TD
+    USER[사용자] -->|QUERY| EMB1[임베딩 모델]
+    
+    MANUAL[볼보 사용자 매뉴얼<br/>DOCUMENTS] -->|DOCUMENTS| EMB2[임베딩 모델]
+    
+    EMB1 -->|질문 + 임베딩| VDB[(벡터 데이터베이스<br/>VECTOR DATABASE)]
+    EMB2 -->|임베딩 + 메타데이터<br/>EMBEDDINGS + METADATA| VDB
+    
+    VDB -->|질문 + 컨텍스트<br/>QUERY + CONTEXT| GEN[생성형 모델<br/>GENERATIVE MODEL]
+    
+    GEN --> ANSWER[운전자는 RAB와 CTA를 비활성화할 수 있습니다.<br/>주차 카메라 화면의 버튼으로<br/>자동 브레이크를 설정하세요.]
+    
+    classDef userClass fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef processClass fill:#f3e5f5,stroke:#4a148c,stroke-width:2px  
+    classDef dbClass fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef aiClass fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef answerClass fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    
+    class USER userClass
+    class EMB1,EMB2 processClass
+    class VDB dbClass
+    class GEN aiClass
+    class ANSWER answerClass
+    class MANUAL processClass

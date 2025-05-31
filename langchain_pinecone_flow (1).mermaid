@@ -1,0 +1,52 @@
+flowchart TD
+    subgraph Phase1["1단계: 환경 구축 및 기초 학습"]
+        SETUP[패키지 설치<br/>python-dotenv, langchain<br/>langchain-openai, pinecone]
+        API[API 키 설정<br/>PINECONE_API_KEY<br/>OPENAI_API_KEY]
+        DEMO[langchain-demo 인덱스<br/>3개 기본 문서 테스트]
+        
+        SETUP --> API
+        API --> DEMO
+    end
+    
+    subgraph Phase2["2단계: 프로토타입 개발"]
+        MOVIE1[movie-index 생성<br/>2개 한국 영화 데이터]
+        EMBED1[시놉시스 임베딩<br/>OpenAI text-embedding-3-small]
+        TEST1[LangChain 유사도 검색<br/>첫 번째 추천 테스트]
+        
+        MOVIE1 --> EMBED1
+        EMBED1 --> TEST1
+    end
+    
+    subgraph Phase3["3단계: 완성 시스템 구축"]
+        MOVIE2[movie-index2 생성<br/>7개 한국 영화 확장]
+        METADATA[상세 메타데이터<br/>제목, 연도, 장르, 설명]
+        BATCH[배치 임베딩 처리<br/>1536차원 벡터 생성]
+        
+        MOVIE2 --> METADATA
+        METADATA --> BATCH
+    end
+    
+    subgraph Phase4["4단계: 실제 검색 및 분석"]
+        SEARCH1[감성 드라마 검색<br/>기생충, 7번방의 선물]
+        SEARCH2[범죄 영화 검색<br/>범죄도시 시리즈]
+        FILTER[필터링 검색<br/>2020년 이후 범죄 영화]
+        ANALYSIS[성능 분석 및<br/>유사도 점수 해석]
+        
+        SEARCH1 --> ANALYSIS
+        SEARCH2 --> ANALYSIS
+        FILTER --> ANALYSIS
+    end
+    
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+    Phase3 --> Phase4
+    
+    classDef setupStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
+    classDef protoStyle fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    classDef systemStyle fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
+    classDef testStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    
+    class SETUP,API,DEMO setupStyle
+    class MOVIE1,EMBED1,TEST1 protoStyle
+    class MOVIE2,METADATA,BATCH systemStyle
+    class SEARCH1,SEARCH2,FILTER,ANALYSIS testStyle

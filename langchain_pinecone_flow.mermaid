@@ -1,0 +1,38 @@
+flowchart TD
+    A[환경 설정] --> B[패키지 설치]
+    B --> C[API 키 로드]
+    C --> D[OpenAI 임베딩 모델 초기화]
+    
+    D --> E[기본 예제: 간단한 문서]
+    E --> F[Pinecone 인덱스 생성: langchain-demo]
+    F --> G[문서를 벡터화하여 저장]
+    G --> H[벡터 검색 테스트]
+    
+    D --> I[영화 데이터 예제 1: 기본 데이터]
+    I --> J[movie-index 생성]
+    J --> K[영화 시놉시스 임베딩]
+    K --> L[Pinecone에 벡터 업로드]
+    L --> M[LangChain으로 유사도 검색]
+    
+    D --> N[영화 데이터 예제 2: 확장 데이터셋]
+    N --> O[movie-index2 생성]
+    O --> P[7개 한국 영화 데이터 준비]
+    P --> Q[영화 설명 임베딩 생성]
+    Q --> R[메타데이터와 함께 벡터 저장]
+    
+    R --> S[검색 시나리오 1: 감성 드라마]
+    R --> T[검색 시나리오 2: 범죄 영화]
+    R --> U[검색 시나리오 3: 필터링 검색]
+    
+    S --> V[결과: 기생충, 7번방의 선물]
+    T --> W[결과: 범죄도시 시리즈, 다만 악에서 구하소서]
+    U --> X[결과: 2020년 이후 범죄 영화만]
+    
+    style A fill:#e1f5fe
+    style D fill:#f3e5f5
+    style F fill:#fff3e0
+    style J fill:#fff3e0
+    style O fill:#fff3e0
+    style V fill:#e8f5e8
+    style W fill:#e8f5e8
+    style X fill:#e8f5e8

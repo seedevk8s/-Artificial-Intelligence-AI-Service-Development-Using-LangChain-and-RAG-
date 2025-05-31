@@ -1,0 +1,50 @@
+flowchart TD
+    subgraph Phase1["1단계: 기본 환경 설정"]
+        INIT[API 키 설정<br/>PINECONE_API_KEY<br/>OPENAI_API_KEY]
+        EMBED[OpenAI 임베딩 모델<br/>text-embedding-3-small]
+        LIST[기존 인덱스 확인<br/>langchain-demo, movie-index 등]
+        
+        INIT --> EMBED
+        EMBED --> LIST
+    end
+    
+    subgraph Phase2["2단계: 위키피디아 데이터 준비"]
+        INSTALL[datasets 라이브러리 설치]
+        LOAD[Wikipedia 데이터 로드<br/>20220301.simple 버전<br/>100개 샘플]
+        STRUCTURE[데이터 구조 분석<br/>id, url, title, text]
+        
+        INSTALL --> LOAD
+        LOAD --> STRUCTURE
+    end
+    
+    subgraph Phase3["3단계: 벡터 인덱스 구축"]
+        CREATE[wiki 인덱스 생성<br/>1536차원, 코사인 유사도]
+        PROCESS[100개 Wikipedia 문서<br/>텍스트 임베딩 처리]
+        STORE[벡터 데이터베이스 구축<br/>메타데이터 포함 저장]
+        
+        CREATE --> PROCESS
+        PROCESS --> STORE
+    end
+    
+    subgraph Phase4["4단계: 검색 시스템 구현"]
+        QUERY[자연어 질의 처리]
+        SEARCH[벡터 유사도 검색<br/>관련 Wikipedia 문서 검색]
+        RESULT[지식 기반 답변 생성<br/>RAG 파이프라인 완성]
+        
+        QUERY --> SEARCH
+        SEARCH --> RESULT
+    end
+    
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+    Phase3 --> Phase4
+    
+    classDef setupStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
+    classDef dataStyle fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    classDef vectorStyle fill:#e8f5e8,stroke:#4caf50,stroke-width:3px
+    classDef ragStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    
+    class INIT,EMBED,LIST setupStyle
+    class INSTALL,LOAD,STRUCTURE dataStyle
+    class CREATE,PROCESS,STORE vectorStyle
+    class QUERY,SEARCH,RESULT ragStyle

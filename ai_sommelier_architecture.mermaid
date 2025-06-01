@@ -1,0 +1,45 @@
+graph TD
+    A[사용자] --> B[Streamlit UI]
+    B --> C[이미지 업로드 + 한 줄 설명]
+    
+    C --> D[sommelier.py]
+    D --> E[describe_dish_flavor]
+    E --> F[GPT-4o-mini Vision API]
+    F --> G[음식 맛/특징 분석 결과]
+    
+    G --> H[텍스트 임베딩 변환]
+    H --> I[text-embedding-3-small]
+    I --> J[임베딩 벡터]
+    
+    J --> K[Pinecone 벡터DB 검색]
+    K --> L[유사한 와인 리뷰 Top-K]
+    L --> M[유사도 점수 포함]
+    
+    M --> N[recommand_wine]
+    N --> O[GPT-4o-mini LLM]
+    O --> P[최종 와인 추천 결과]
+    
+    P --> Q[Streamlit UI 결과 표시]
+    Q --> R[추천 와인, 이유, 리뷰, 유사도]
+    R --> A
+    
+    subgraph "외부 서비스"
+        F
+        I
+        O
+        S[Pinecone Vector DB]
+    end
+    
+    subgraph "환경 설정"
+        T[.env 파일]
+        T --> U[OpenAI API Key]
+        T --> V[Pinecone API Key]
+        T --> W[모델 설정]
+    end
+    
+    K --> S
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style D fill:#fff3e0
+    style S fill:#e8f5e8

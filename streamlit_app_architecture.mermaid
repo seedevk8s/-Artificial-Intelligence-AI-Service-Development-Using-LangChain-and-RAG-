@@ -1,0 +1,40 @@
+graph TD
+    A[사용자] --> B[Streamlit UI<br/>app.py]
+    B --> C[이미지 업로드<br/>jpg, jpeg, png]
+    B --> D[텍스트 프롬프트 입력]
+    
+    C --> E[추천하기 버튼 클릭]
+    D --> E
+    
+    E --> F[1단계: describe_dish_flavor]
+    F --> G[이미지 → Base64 변환]
+    G --> H[GPT-4o-mini Vision API]
+    H --> I[맛 특징 결과 표시]
+    
+    I --> J[2단계: search_wine]
+    J --> K[벡터 임베딩 생성]
+    K --> L[Pinecone 벡터 검색]
+    L --> M[와인 리뷰 결과 표시]
+    
+    M --> N[3단계: recommand_wine<br/>미완성]
+    N --> O[최종 추천 생성<br/>구현 예정]
+    O --> P[완료 메시지]
+    
+    P --> A
+    
+    subgraph Backend [sommelier.py]
+        Q[환경변수 로드]
+        R[LLM 초기화]
+        S[임베딩 초기화]
+        T[벡터스토어 초기화]
+    end
+    
+    F --> Backend
+    J --> Backend
+    N --> Backend
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style F fill:#fff3e0
+    style J fill:#fff3e0
+    style N fill:#ffebee
